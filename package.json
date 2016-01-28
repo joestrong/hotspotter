@@ -1,0 +1,16 @@
+{
+  "name": "gps",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Joe Strong <joestrong@gmail.com> (https://www.joestrong.co.uk/)",
+  "license": "ISC",
+  "dependencies": {
+    "node-gpsd": "^0.2.4",
+    "node-wifiscanner": "^0.2.1",
+    "wifi": "0.0.2"
+  }
+}
