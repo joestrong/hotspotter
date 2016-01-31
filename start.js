@@ -1,5 +1,8 @@
+"use strict";
+
 var gpsd = require('node-gpsd');
 var scanner = require('node-wifiscanner');
+var fs = require('fs');
 
 var location = {};
 var store = {};
@@ -45,10 +48,32 @@ function startWifi() {
                 }
             }
         }
+        saveStore();
         setTimeout(startWifi, 1000);
     });
 }
 
+function loadStore() {
+    fs.readFile('store.json', (err, data) => {
+        if (err) {
+            console.log('Load error: ' + err);
+        }
+        if (data) {
+            store = JSON.parse(data);
+            console.log('Loaded previous data');
+        }
+    });
+}
+
+function saveStore() {
+    fs.writeFile('store.json', JSON.stringify(store), (err) => {
+        if (err) {
+            console.log('Save error: ' + err);
+        }
+    });
+}
+
 console.log("Initialising");
+loadStore();
 startGPS();
 startWifi();
