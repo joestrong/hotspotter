@@ -11,7 +11,7 @@
   "dependencies": {
     "fs": "0.0.2",
     "node-gpsd": "^0.2.4",
-    "node-wifiscanner": "^0.2.1",
+    "node-wifiscanner": "https://github.com/joestrong/node-wifiscanner.git#4a3c52b7a8",
     "wifi": "0.0.2"
   }
 }

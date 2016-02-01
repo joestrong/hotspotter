@@ -45,7 +45,8 @@ function startWifi() {
                         position: location,
                         signal: data[i]['signal_level'],
                         mac: data[i]['mac'],
-                        channel: data[i]['channel']
+                        channel: data[i]['channel'],
+                        protected: data[i]['encryption_key'] === 'on' ? true : false
                     };
                     console.log('Found wifi: ' + data[i]['ssid']);
                 }
