@@ -12,16 +12,19 @@ var gpsListener = new gpsd.Listener({
     hostname: 'localhost'
 });
  
-function startGPS () {
+function startGPS (callback) {
     gpsListener.connect();
     gpsListener.watch();
     gpsListener.on('TPV', function (tpvData) {
         if (tpvData.lat && tpvData.lon) {
             if (!location.lat || !location.lon) {
-                console.log('Got GPS fix: ' + tpvData.lat + ' ' + tpvData.lon);
+                location.lat = tpvData.lat;
+                location.lon = tpvData.lon;
+                callback();
+            } else {
+                location.lat = tpvData.lat;
+                location.lon = tpvData.lon;
             }
-            location.lat = tpvData.lat;
-            location.lon = tpvData.lon;
         }
     });
 }
@@ -57,15 +60,15 @@ function startWifi() {
     });
 }
 
-function loadStore() {
+function loadStore(callback) {
     fs.readFile('store.json', (err, data) => {
         if (err) {
-            console.log('Load error: ' + err);
+            console.log('Could not load previous data [' + err + ']');
         }
         if (data) {
             store = JSON.parse(data);
-            console.log('Loaded previous data');
         }
+        callback();
     });
 }
 
@@ -77,7 +80,12 @@ function saveStore() {
     });
 }
 
-console.log("Initialising");
-loadStore();
-startGPS();
-startWifi();
+console.log("Loading previous data..");
+loadStore(function() {
+    console.log("Getting GPS fix..");
+    startGPS(function() {
+        console.log('Got GPS fix: ' + location.lat + ' ' + location.lon);
+        console.log('Scanning for wifi..');
+        startWifi();
+    });
+});
