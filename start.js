@@ -42,7 +42,10 @@ function startWifi() {
                 if (!store[data[i]['ssid']]) {
                     store[data[i]['ssid']] = {
                         ssid: data[i]['ssid'],
-                        position: location
+                        position: location,
+                        signal: data[i]['signal_level'],
+                        mac: data[i]['mac'],
+                        channel: data[i]['channel']
                     };
                     console.log('Found wifi: ' + data[i]['ssid']);
                 }
