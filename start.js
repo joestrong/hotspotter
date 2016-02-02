@@ -40,16 +40,17 @@ function startWifi() {
         }
         if (Array.isArray(data)) {
             for (var i in data) {
-                if (!store[data[i]['ssid']]) {
-                    store[data[i]['ssid']] = {
-                        ssid: data[i]['ssid'],
+                var wifi = data[i];
+                if (!store[wifi['mac']]) {
+                    store[wifi['mac']] = {
+                        ssid: wifi['ssid'],
                         position: location,
-                        signal: data[i]['signal_level'],
-                        mac: data[i]['mac'],
-                        channel: data[i]['channel'],
-                        protected: data[i]['encryption_key'] === 'on' ? true : false
+                        signal: wifi['signal_level'],
+                        mac: wifi['mac'],
+                        channel: wifi['channel'],
+                        protected: wifi['encryption_key'] === 'on' ? true : false
                     };
-                    console.log('Found wifi: ' + data[i]['ssid']);
+                    console.log('Found wifi: ' + wifi['ssid']);
                 }
             }
         }
