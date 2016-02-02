@@ -17,13 +17,11 @@ function startGPS (callback) {
     gpsListener.watch();
     gpsListener.on('TPV', function (tpvData) {
         if (tpvData.lat && tpvData.lon) {
-            if (!location.lat || !location.lon) {
-                location.lat = tpvData.lat;
-                location.lon = tpvData.lon;
+            let gotFix = !location.lat || !location.lon;
+            location.lat = tpvData.lat;
+            location.lon = tpvData.lon;
+            if (gotFix) {
                 callback();
-            } else {
-                location.lat = tpvData.lat;
-                location.lon = tpvData.lon;
             }
         }
     });
