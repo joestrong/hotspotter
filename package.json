@@ -2,8 +2,9 @@
   "name": "gps",
   "version": "1.0.0",
   "description": "",
-  "main": "script.js",
+  "main": "start.js",
   "scripts": {
+    "start": "node start.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Joe Strong <joestrong@gmail.com> (https://www.joestrong.co.uk/)",
