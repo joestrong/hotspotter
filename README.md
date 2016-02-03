@@ -10,7 +10,7 @@ If you're using a raspberry pi, there's a `rpi-install.sh` script for installing
 - GPS receiver
 - Software:
  - gpsd
- - node & npm
+ - nodejs v5 & npm
 
 # Usage
 
