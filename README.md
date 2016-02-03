@@ -1,4 +1,27 @@
-# hotspotter
+# Hotspotter
+
+Gather data on nearby wifi hotspots and associated them with a GPS location
+
+# Prerequisites
+
+If you're using a raspberry pi, there's a `rpi-install.sh` script for installing dependancies via APT
+
+- Linux OS
+- GPS receiver
+- Software:
+ - gpsd
+ - node & npm
+
+# Usage
+
+- `git clone https://github.com/joestrong/hotspotter.git`
+- `cd hotspotter`
+- `npm install`
+- `node start.js` or `npm start`
+- Wait for a GPS fix, then wifi scanning should start
+- Check `store.json` for your results. This file will be loaded the next time you run
+
+# To Do
 
 - [x] Geolocate with USB GPS receiver
 - [x] Scan wifi SSIDs nearby
