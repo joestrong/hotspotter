@@ -29,3 +29,4 @@ If you're using a raspberry pi, there's a `rpi-install.sh` script for installing
 - [x] Record whether wifi networks are protected or public
 - [ ] Adjust wifi location based on new data with stronger signal
 - [x] Wait for GPS signal before logging any WiFi
+- [ ] Add a map UI for plotting the locations of found wifi
