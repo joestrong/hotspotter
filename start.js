@@ -72,7 +72,7 @@ function loadStore(callback) {
 }
 
 function saveStore() {
-    fs.writeFile('store.json', JSON.stringify(store), (err) => {
+    fs.writeFile('store.json', JSON.stringify(store, null, 2), (err) => {
         if (err) {
             console.log('Save error: ' + err);
         }
