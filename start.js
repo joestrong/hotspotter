@@ -46,9 +46,10 @@ function startWifi() {
                         ssid: wifi['ssid'],
                         position: location,
                         signal: wifi['signal_level'],
+                        quality: qualityAsPercentage(wifi['quality']),
                         mac: wifi['mac'],
                         channel: wifi['channel'],
-                        protected: wifi['encryption_key'] === 'on' ? true : false
+                        'protected': (wifi['encryption_key'] === 'on')
                     };
                     console.log('Found wifi: ' + wifi['ssid']);
                 }
@@ -57,6 +58,12 @@ function startWifi() {
         saveStore();
         setTimeout(startWifi, 1000);
     });
+}
+
+function qualityAsPercentage(string) {
+    let parts = string.split('/');
+    let percentage = Math.round(parts[0] / parts[1] * 100);
+    return percentage;
 }
 
 function loadStore(callback) {
