@@ -2,3 +2,4 @@ node_modules/
 store.json
 *.log
 nohup.out
+.idea/
