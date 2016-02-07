@@ -41,7 +41,7 @@ function startWifi() {
         if (Array.isArray(data)) {
             for (var i in data) {
                 var wifi = data[i];
-                if (!store[wifi['mac']]) {
+                if (!alreadyLogged(wifi) || hasBetterQuality(wifi)) {
                     store[wifi['mac']] = {
                         ssid: wifi['ssid'],
                         position: location,
@@ -51,7 +51,6 @@ function startWifi() {
                         channel: wifi['channel'],
                         'protected': (wifi['encryption_key'] === 'on')
                     };
-                    console.log('Found wifi: ' + wifi['ssid']);
                 }
             }
         }
@@ -64,6 +63,23 @@ function qualityAsPercentage(string) {
     let parts = string.split('/');
     let percentage = Math.round(parts[0] / parts[1] * 100);
     return percentage;
+}
+
+function alreadyLogged(wifi) {
+    let alreadyLogged = store[wifi['mac']] ? true : false;
+    if (!alreadyLogged) {
+        console.log('Found new wifi: ' + wifi['ssid']);
+    }
+    return alreadyLogged;
+}
+
+function hasBetterQuality(wifi) {
+    let oldQuality = store[wifi['mac']]['quality'] || 0;
+    let newQuality = qualityAsPercentage(wifi['quality']);
+    if (newQuality > oldQuality) {
+        console.log('Updated wifi: ' + wifi['ssid'] + ' [Quality: ' + oldQuality + ' -> ' + newQuality + ']');
+    }
+    return (newQuality > oldQuality);
 }
 
 function loadStore(callback) {
