@@ -19,7 +19,8 @@ If you're using a raspberry pi, there's a `rpi-install.sh` script for installing
 - `npm install`
 - `node start.js` or `npm start`
 - Wait for a GPS fix, then wifi scanning should start
-- Check `store.json` for your results. This file will be loaded the next time you run
+- The file `store.json` will hold your results. This file will be loaded the next time you run
+- Run a local webserver in the root folder to get access to a google map with plotted results
 
 # To Do
 
@@ -29,4 +30,4 @@ If you're using a raspberry pi, there's a `rpi-install.sh` script for installing
 - [x] Record whether wifi networks are protected or public
 - [ ] Adjust wifi location based on new data with stronger signal
 - [x] Wait for GPS signal before logging any WiFi
-- [ ] Add a map UI for plotting the locations of found wifi
+- [x] Add a map UI for plotting the locations of found wifi
