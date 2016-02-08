@@ -41,6 +41,7 @@
             console.log('Could not locate user: Not supported in browser');
         }
         loadPoints(function(points) {
+            var i = 0;
             for (var key in points) {
                 var point = points[key];
                 var marker = new google.maps.Marker({
@@ -48,7 +49,9 @@
                     map: map,
                     title: point.ssid
                 });
+                i++;
             }
+            console.log(i);
         });
     }
     function loadPoints(callback) {
