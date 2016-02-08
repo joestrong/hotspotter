@@ -44,11 +44,13 @@
             var i = 0;
             for (var key in points) {
                 var point = points[key];
-                var marker = new google.maps.Marker({
-                    position: { lat: point.position.lat, lng: point.position.lon },
-                    map: map,
-                    title: point.ssid
-                });
+                if (!isCommonSSID(point.ssid)) {
+                    var marker = new google.maps.Marker({
+                        position: { lat: point.position.lat, lng: point.position.lon },
+                        map: map,
+                        title: point.ssid
+                    });
+                }
                 i++;
             }
             console.log(i);
@@ -65,6 +67,17 @@
             callback(points);
         }
     }
+
+function isCommonSSID(ssid) {
+    var common = ['BT', 'SKY', 'VM', 'TALKTALK', 'DIRECT', 'virgin', 'TP-LINK', 'PLUSNET'];
+    for (var i in common) {
+        var item = common[i];
+        if (ssid.indexOf(item) !==  -1) {
+            return true;
+        }
+    }
+    return false;
+}
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbXz4K5z1iLZDyZMSpjOkuvjENr1Rze3w&callback=initMap"
         async defer></script>
