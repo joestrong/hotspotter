@@ -44,7 +44,7 @@ function startWifi() {
                 if (!alreadyLogged(wifi) || hasBetterQuality(wifi)) {
                     store[wifi['mac']] = {
                         ssid: wifi['ssid'],
-                        position: location,
+                        position: { lat: location.lat, lon: location.lon },
                         signal: wifi['signal_level'],
                         quality: qualityAsPercentage(wifi['quality']),
                         mac: wifi['mac'],
