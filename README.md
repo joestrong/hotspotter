@@ -31,3 +31,9 @@ If you're using a raspberry pi, there's a `rpi-install.sh` script for installing
 - [x] Adjust wifi location based on new data with stronger signal
 - [x] Wait for GPS signal before logging any WiFi
 - [x] Add a map UI for plotting the locations of found wifi
+- [ ] Add config file for setting Google Map API Key, and for future settings
+- [ ] Add configurable map filters
+- [ ] Add configurable map colour coding (e.g. Highlight public wifi)
+- [ ] Add configurable highlighting of specific wifi hotspots
+- [ ] Add conjoining of pins when overlapping occurs on map
+- [ ] Adjust wifi location based on signal strength, not connection quality
