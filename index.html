@@ -18,13 +18,16 @@
 </head>
 <body>
 <div id="map"></div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbXz4K5z1iLZDyZMSpjOkuvjENr1Rze3w"></script>
+<script src="/oms.min.js"></script>
 <script>
-    var map;
+    var map, oms;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
             zoom: 16
         });
+        oms = new OverlappingMarkerSpiderfier(map);
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -44,13 +47,12 @@
             var i = 0;
             for (var key in points) {
                 var point = points[key];
-                if (!isCommonSSID(point.ssid)) {
                     var marker = new google.maps.Marker({
                         position: { lat: point.position.lat, lng: point.position.lon },
                         map: map,
                         title: point.ssid
                     });
-                }
+                    oms.addMarker(marker);
                 i++;
             }
             console.log(i);
@@ -68,18 +70,18 @@
         }
     }
 
-function isCommonSSID(ssid) {
-    var common = ['BT', 'SKY', 'VM', 'TALKTALK', 'DIRECT', 'virgin', 'TP-LINK', 'PLUSNET'];
-    for (var i in common) {
-        var item = common[i];
-        if (ssid.indexOf(item) !==  -1) {
-            return true;
+    function isCommonSSID(ssid) {
+        var common = ['BT', 'SKY', 'VM', 'TALKTALK', 'DIRECT', 'virgin', 'TP-LINK', 'PLUSNET'];
+        for (var i in common) {
+            var item = common[i];
+            if (ssid.indexOf(item) !==  -1) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
+
+    initMap();
 </script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbXz4K5z1iLZDyZMSpjOkuvjENr1Rze3w&callback=initMap"
-        async defer></script>
 </body>
 </html>
