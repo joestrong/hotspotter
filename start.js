@@ -55,7 +55,7 @@ function startWifi() {
             }
         }
         saveStore();
-        setTimeout(startWifi, 1000);
+        startWifi();
     });
 }
 
