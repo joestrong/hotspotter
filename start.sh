@@ -1,3 +1,3 @@
 #!/bin/bash
 
-nohup node start.js &
+sudo nohup node start.js &
