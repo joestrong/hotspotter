@@ -36,4 +36,4 @@ If you're using a raspberry pi, there's a `rpi-install.sh` script for installing
 - [ ] Add configurable map colour coding (e.g. Highlight public wifi)
 - [ ] Add configurable highlighting of specific wifi hotspots
 - [x] Add conjoining of pins when overlapping occurs on map
-- [ ] Adjust wifi location based on signal strength, not connection quality
+- [x] Adjust wifi location based on signal strength, not connection quality
