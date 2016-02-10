@@ -41,11 +41,11 @@ function startWifi() {
         if (Array.isArray(data)) {
             for (var i in data) {
                 var wifi = data[i];
-                if (!alreadyLogged(wifi) || hasBetterQuality(wifi)) {
+                if (!alreadyLogged(wifi) || hasBetterSignal(wifi)) {
                     store[wifi['mac']] = {
                         ssid: wifi['ssid'],
                         position: { lat: location.lat, lon: location.lon },
-                        signal: wifi['signal_level'],
+                        signal: parseInt(wifi['signal_level']),
                         quality: qualityAsPercentage(wifi['quality']),
                         mac: wifi['mac'],
                         channel: wifi['channel'],
@@ -74,12 +74,22 @@ function alreadyLogged(wifi) {
 }
 
 function hasBetterQuality(wifi) {
-    let oldQuality = store[wifi['mac']]['quality'] || 0;
+    let oldQuality = store[wifi.mac]['quality'] || 0;
     let newQuality = qualityAsPercentage(wifi['quality']);
     if (newQuality > oldQuality) {
-        console.log('Updated wifi: ' + wifi['ssid'] + ' [Quality: ' + oldQuality + ' -> ' + newQuality + ']');
+        console.log('Updated wifi: ' + wifi.ssid + ' [Quality: ' + oldQuality + ' -> ' + newQuality + ']');
     }
     return (newQuality > oldQuality);
+}
+
+function hasBetterSignal(wifi) {
+    let oldSignal = parseInt(store[wifi.mac]['signal']) || -150;
+    let newSignal = parseInt(wifi.signal_level);
+    if (newSignal > oldSignal) {
+        console.log('Updated wifi: ' + wifi.ssid + ' [Signal: ' + oldSignal + ' -> ' + newSignal + ']');
+        return true;
+    }
+    return false;
 }
 
 function loadStore(callback) {
