@@ -85,6 +85,10 @@ function hasBetterQuality(wifi) {
 function hasBetterSignal(wifi) {
     let oldSignal = parseInt(store[wifi.mac]['signal']) || -150;
     let newSignal = parseInt(wifi.signal_level);
+    // Sometimes you get signal of 0, not sure why, ignore it
+    if (newSignal == 0) {
+        return false;
+    }
     if (newSignal > oldSignal) {
         console.log('Updated wifi: ' + wifi.ssid + ' [Signal: ' + oldSignal + ' -> ' + newSignal + ']');
         return true;
