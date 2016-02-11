@@ -10,14 +10,37 @@
             margin: 0;
             padding: 0;
         }
-
-        #map {
+        body {
+            font-family: helvetica, arial, sans-serif;
+        }
+        
+        .wrapper {
+            display: flex;
             height: 100%;
+        }
+        .left-col {
+            width: 250px;
+            padding: 20px;
+            display: none;
+        }
+        .right-col {
+            display: flex;
+            flex: 1;
+        }
+        #map {
+            flex: 1;
         }
     </style>
 </head>
 <body>
-<div id="map"></div>
+<div class="wrapper">
+    <div class="left-col">
+        Options
+    </div>
+    <div class="right-col">
+        <div id="map"></div>
+    </div>
+</div>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbXz4K5z1iLZDyZMSpjOkuvjENr1Rze3w"></script>
 <script src="/oms.min.js"></script>
 <script>
@@ -47,11 +70,16 @@
             var i = 0;
             for (var key in points) {
                 var point = points[key];
-                    var marker = new google.maps.Marker({
+                    var markerConfig = {
+                        icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                         position: { lat: point.position.lat, lng: point.position.lon },
                         map: map,
                         title: point.ssid
-                    });
+                    };
+                    if (!point.protected) {
+                        markerConfig.icon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                    }
+                    var marker = new google.maps.Marker(markerConfig);
                     oms.addMarker(marker);
                 i++;
             }
