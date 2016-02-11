@@ -21,7 +21,9 @@
         .left-col {
             width: 250px;
             padding: 20px;
-            display: none;
+        }
+        .left-col label {
+            display: block;
         }
         .right-col {
             display: flex;
@@ -35,7 +37,16 @@
 <body>
 <div class="wrapper">
     <div class="left-col">
-        Options
+        <h1>Options</h1>
+
+        <label>
+            Protection
+            <select id="protection">
+                <option value="">Any</option>
+                <option value="1">On</option>
+                <option value="0">Off</option>
+            </select>
+        </label>
     </div>
     <div class="right-col">
         <div id="map"></div>
@@ -44,7 +55,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbXz4K5z1iLZDyZMSpjOkuvjENr1Rze3w"></script>
 <script src="/oms.min.js"></script>
 <script>
-    var map, oms;
+    var map, oms, markers;
     function initMap() {
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
@@ -74,7 +85,10 @@
                         icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                         position: { lat: point.position.lat, lng: point.position.lon },
                         map: map,
-                        title: point.ssid
+                        title: point.ssid,
+                        data: {
+                            protected: point.protected
+                        }
                     };
                     if (!point.protected) {
                         markerConfig.icon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
@@ -108,6 +122,39 @@
         }
         return false;
     }
+
+    function onProtectionChange(event) {
+        var markers = oms.getMarkers();
+        switch (event.target.value) {
+            case '0':
+                for (var i in markers) {
+                    var marker = markers[i];
+                    if (marker.data.protected === false) {
+                        marker.setMap(map);
+                    } else {
+                        marker.setMap(null);
+                    }
+                }
+                break;
+            case '1':
+                for (var i in markers) {
+                    var marker = markers[i];
+                    if (marker.data.protected === true) {
+                        marker.setMap(map);
+                    } else {
+                        marker.setMap(null);
+                    }
+                }
+                break;
+            default:
+                for (var i in markers) {
+                    var marker = markers[i];
+                    marker.setMap(map);
+                }
+                break;
+        }
+    }
+    document.getElementById('protection').addEventListener('change', onProtectionChange);
 
     initMap();
 </script>
