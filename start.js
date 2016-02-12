@@ -41,7 +41,7 @@ function startWifi() {
         if (Array.isArray(data)) {
             for (var i in data) {
                 var wifi = data[i];
-                if (!alreadyLogged(wifi) || hasBetterSignal(wifi)) {
+                if (!alreadyLogged(wifi) || hasBetterSignal(wifi) || amMissingData(wifi)) {
                     store[wifi['mac']] = {
                         ssid: wifi['ssid'],
                         position: { lat: location.lat, lon: location.lon },
@@ -92,6 +92,16 @@ function hasBetterSignal(wifi) {
     }
     if (newSignal > oldSignal) {
         console.log('Updated wifi: ' + wifi.ssid + ' [Signal: ' + oldSignal + ' -> ' + newSignal + ']');
+        return true;
+    }
+    return false;
+}
+
+function amMissingData(wifi) {
+    let isProtected = store[wifi.mac].protected;
+    let security = store[wifi.mac].security;
+    if (isProtected === true && !security) {
+        console.log('Updated wifi: ' + wifi.ssid + ' [Added Security Record]');
         return true;
     }
     return false;
