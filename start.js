@@ -49,7 +49,8 @@ function startWifi() {
                         quality: qualityAsPercentage(wifi['quality']),
                         mac: wifi['mac'],
                         channel: wifi['channel'],
-                        'protected': (wifi['encryption_key'] === 'on')
+                        'protected': (wifi['encryption_key'] === 'on'),
+                        security: (wifi['encryption_key'] === 'on') ? (wifi['encryption_type'] ? wifi['encryption_type'] : 'WEP') : ''
                     };
                 }
             }
