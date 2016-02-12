@@ -44,7 +44,8 @@
             <select id="protection">
                 <option value="">Any</option>
                 <option value="1">On</option>
-                <option value="0">Off</option>
+                <option value="0">Open</option>
+                <option value="WEP">WEP Only</option>
             </select>
         </label>
     </div>
@@ -87,11 +88,15 @@
                         map: map,
                         title: point.ssid,
                         data: {
-                            protected: point.protected
+                            protected: point.protected,
+                            security: point.security
                         }
                     };
                     if (!point.protected) {
                         markerConfig.icon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+                    }
+                    if (point.security === 'WEP') {
+                        markerConfig.icon = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
                     }
                     var marker = new google.maps.Marker(markerConfig);
                     oms.addMarker(marker);
@@ -140,6 +145,16 @@
                 for (var i in markers) {
                     var marker = markers[i];
                     if (marker.data.protected === true) {
+                        marker.setMap(map);
+                    } else {
+                        marker.setMap(null);
+                    }
+                }
+                break;
+            case 'WEP':
+                for (var i in markers) {
+                    var marker = markers[i];
+                    if (marker.data.security === 'WEP') {
                         marker.setMap(map);
                     } else {
                         marker.setMap(null);
