@@ -3,6 +3,7 @@
 var gpsd = require('node-gpsd');
 var scanner = require('node-wifiscanner');
 var fs = require('fs');
+var colors = require('colors');
 
 var location = {};
 var store = {};
@@ -50,7 +51,7 @@ function startWifi() {
                         mac: wifi['mac'],
                         channel: wifi['channel'],
                         'protected': (wifi['encryption_key'] === 'on'),
-                        security: (wifi['encryption_key'] === 'on') ? (wifi['encryption_type'] ? wifi['encryption_type'] : 'WEP') : ''
+                        security: workOutSecurity(wifi)
                     };
                 }
             }
@@ -66,10 +67,17 @@ function qualityAsPercentage(string) {
     return percentage;
 }
 
+function workOutSecurity(wifi) {
+    return (wifi['encryption_key'] === 'on') ? (wifi['encryption_type'] ? wifi['encryption_type'] : 'WEP') : '';
+}
+
 function alreadyLogged(wifi) {
-    let alreadyLogged = store[wifi['mac']] ? true : false;
+    let alreadyLogged = store[wifi.mac] ? true : false;
     if (!alreadyLogged) {
-        console.log('Found new wifi: ' + wifi['ssid']);
+        console.log('Found new wifi: ' + wifi.ssid);
+        if(workOutSecurity(wifi) === 'WEP') {
+            console.log(('Found WEP! SSID: ' + wifi.ssid).black.bgYellow);
+        }
     }
     return alreadyLogged;
 }
