@@ -113,6 +113,9 @@ function checkForMissingData(wifi) {
     if (isProtected === true && !security) {
         store[wifi.mac].security = workOutSecurity(wifi);
         console.log('Updated wifi: ' + wifi.ssid + ' [Added Security Record]');
+        if(workOutSecurity(wifi) === 'WEP') {
+            console.log(('Found WEP! SSID: ' + wifi.ssid).black.bgYellow);
+        }
     }
 }
 
