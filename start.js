@@ -7,6 +7,7 @@ var colors = require('colors');
 
 var location = {};
 var store = {};
+var config = require('./config.js');
 
 var gpsListener = new gpsd.Listener({
     port: 2947,
@@ -53,6 +54,7 @@ function startWifi() {
                         'protected': (wifi['encryption_key'] === 'on'),
                         security: workOutSecurity(wifi)
                     };
+                    addTags(wifi);
                 } else {
                     checkForMissingData(wifi);
                 }
@@ -115,6 +117,24 @@ function checkForMissingData(wifi) {
         console.log('Updated wifi: ' + wifi.ssid + ' [Added Security Record]');
         if(workOutSecurity(wifi) === 'WEP') {
             console.log(('Found WEP! SSID: ' + wifi.ssid).black.bgYellow);
+        }
+    }
+    addTags(wifi);
+}
+
+function addTags(wifi) {
+    let tags = config.tags;
+    for (let tag in tags) {
+        var tagMatchers = tags[tag];
+        for (let i in tagMatchers) {
+            var tagMatcher = tagMatchers[i];
+            if (wifi.ssid.indexOf(tagMatcher) !== -1 && (!store[wifi.mac].tags || store[wifi.mac].tags.indexOf(tag) === -1)) {
+                if (!store[wifi.mac].tags) {
+                    store[wifi.mac].tags = [];
+                }
+                store[wifi.mac].tags.push(tag);
+                console.log('Updated wifi: ' + wifi.ssid + ' [Added tag: ' + tag + ']');
+            }
         }
     }
 }
